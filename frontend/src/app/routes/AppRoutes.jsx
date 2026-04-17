@@ -6,8 +6,8 @@ import SearchPage from "@/features/search/pages/SearchPage";
 import HallDetails from "@/features/hall/pages/HallDetails";
 import BookingPage from "@/features/booking/pages/BookingPage";
 
-import Login from "@/features/auth/pages/Login";
-import Register from "@/features/auth/pages/register";
+import Login from "@/features/Auth/pages/login";
+import Register from "@/features/Auth/pages/register";
 
 import Favorites from "@/features/favorites/pages/Favorites";
 import Profile from "@/features/profile/pages/Profile";
