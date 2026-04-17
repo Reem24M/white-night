@@ -5,13 +5,13 @@ import express, { json } from "express";
 import cors from "cors";
 
 import  connectDB  from "./config/connectdb.js";
-// import authRoutes from "../backend/Routes/auth.route.js";
+import authRoutes from "./Routes/auth.route.js";
 // import userRoutes from "../backend/Routes/user.route.js";
 // import RestaurantsRoutes from "../backend/Routes/restaurant.route.js";
-// import {
-//   errorHandler,
-//   notFoundHandler,
-// } from "../backend/Middlewares/notFoundErrorHandler.middleware.js";
+import {
+  errorHandler,
+  notFoundHandler,
+} from "./middleware/notfounderrorhandler.js";
 // import SettingsRoutes from "../backend/Routes/adminSettings.route.js";
 // import favRestaurantsRoutes from "../backend/Routes/favRestaurants.route.js";
 // import ReviewsRoutes from "../backend/Routes/reviews.route.js";
@@ -29,7 +29,7 @@ await connectDB();
 // });
 
 // // Routes
-// app.use("/auth", authRoutes);
+app.use("/auth", authRoutes);
 // app.use("/user", userRoutes);
 // app.use("/restaurants", RestaurantsRoutes);
 // app.use("/admin", SettingsRoutes);
