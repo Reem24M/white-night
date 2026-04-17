@@ -1,6 +1,4 @@
 import { model, Schema } from "mongoose";
-import { phoneNumberField, invalidPhoneMsg } from "../Utils/Schema-patterns.js";
-import { HallTypes, PriceRanges, LIMITS } from "../Utils/Constants.js";
 
 const hallSchema = new Schema(
   {
