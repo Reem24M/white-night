@@ -1,6 +1,6 @@
 import { hash } from "bcrypt";
-import { Users } from "../Models/user.model.js";
-import { registerSchema } from "../Validators/register_validation.js";
+import { Users } from '../models/user.js';
+import { registerSchema } from "../validators/register_schema.js";
 import asyncHandler from "express-async-handler";
 
 const register = asyncHandler(async (req, res) => {
@@ -8,13 +8,16 @@ const register = asyncHandler(async (req, res) => {
 
     if (error) return res.status(400).json({ error: error.details[0].message });
 
-        const { fullname, email, phone, password } = req.body;
+        const { fullname, email, phone, password, role } = req.body;
 
 
     const existingUser = await Users.findOne({ email });
     if (existingUser)
         return res.status(400).json({ error: "User already exists" });
 
+    if(role && role !== 'user' && role !== 'Owner') {
+        return res.status(400).json({ error: "Invalid role specified" });
+    }
     const hashedPassword = await hash(password, 10);
 
     const newUser = new Users({
@@ -22,6 +25,7 @@ const register = asyncHandler(async (req, res) => {
         email,
         phone,
         password: hashedPassword,
+        role: role 
     });
 
     await newUser.save();

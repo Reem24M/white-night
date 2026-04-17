@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt';
-import { Users } from '../Models/user.model.js';
-import { loginSchema } from '../Validators/login_validation.js';
+import { Users } from '../models/user.js';
+import { loginSchema } from '../validators/login_schema.js';
 
 const login = async (req, res) => {
     try {
