@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { Users } from "../Models/user.model.js";
-import { restaurantModel } from "../Models/restaurant.model.js";
+import { Users } from "../models/user.model.js";
+import { hallModel } from "../models/Hall.js";
 
 const optionalProtect = async (req, res, next) => {
   const authHeader = req.headers.authorization;
