@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
+import MainLayout from "@/app/layouts/MainLayout";
+import AuthLayout from "@/app/layouts/AuthLayout";
 
 import Home from "@/features/home/pages/Home";
 import SearchPage from "@/features/search/pages/SearchPage";
@@ -8,11 +10,14 @@ import BookingPage from "@/features/booking/pages/BookingPage";
 
 import Login from "@/features/Auth/pages/login";
 import Register from "@/features/Auth/pages/register";
+import ForgotPassword from "@/features/Auth/pages/ForgotPassword";
+import ResetPassword from "@/features/Auth/pages/ResetPassword";
 
 import Favorites from "@/features/favorites/pages/Favorites";
 import Profile from "@/features/profile/pages/Profile";
 
 import NotFound from "@/features/error";
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -25,6 +30,8 @@ export default function AppRoutes() {
       {/* Auth */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       {/* User */}
       <Route path="/favorites" element={<Favorites />} />
