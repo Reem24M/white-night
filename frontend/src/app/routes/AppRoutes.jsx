@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 
 
-import Home from "@/features/home/pages/Home";
+import Home from "@/features/home/pages/home";
 import SearchPage from "@/features/search/pages/SearchPage";
 import HallDetails from "@/features/hall/pages/HallDetails";
 import BookingPage from "@/features/booking/pages/BookingPage";
 
-import Login from "@/features/auth/pages/Login";
+import Login from "@/features/auth/pages/login";
 import Register from "@/features/auth/pages/register";
 
 import Favorites from "@/features/favorites/pages/Favorites";
