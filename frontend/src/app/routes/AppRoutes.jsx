@@ -12,7 +12,7 @@ import Login from "@/features/Auth/pages/login";
 import Register from "@/features/Auth/pages/register";
 
 import Favorites from "@/features/favorites/pages/Favorites";
-import Profile from "@/features/profile/pages/Profile";
+import Profile from "@/features/profile/pages/profile";
 import About from "@/features/about/pages/about";
 import NotFound from "@/features/error";
 
