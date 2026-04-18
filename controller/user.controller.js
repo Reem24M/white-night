@@ -1,6 +1,10 @@
+import asyncHandler from "express-async-handler";
+import { Users } from "../models/user.js";
+import { hallModel } from "../models/Hall.js";
+import { reviewModel } from "../models/reviews.js";
 
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+  const user = await Users.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
@@ -43,7 +47,6 @@ const deleteAccountController = asyncHandler(async (req, res) => {
   }
 
   await Promise.all([
-    favHallModel.deleteMany({ user: targetId }),
     Users.findByIdAndDelete(targetId),
   ]);
 
@@ -51,3 +54,5 @@ const deleteAccountController = asyncHandler(async (req, res) => {
     .status(200)
     .json({ message: "Account and related data deleted successfully" });
 });
+
+export { updateUser, deleteAccountController };
