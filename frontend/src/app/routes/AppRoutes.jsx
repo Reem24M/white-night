@@ -6,8 +6,8 @@ import AuthLayout from "../layouts/AuthLayout";
 // لاحظ أسماء الملفات والمجلدات هنا
 import Home from "@/features/home/pages/home";
 import SearchPage from "@/features/search/pages/SearchPage";
-import HallDetails from "@/features/hall/pages/HallDetails";
-import BookingPage from "@/features/booking/pages/BookingPage"; // تعديل: الحرف الأول B كبير
+import HallDetails from "@/features/hall/pages/hallDetails";
+import BookingPage from "@/features/booking/pages/bookingPage"; 
 
 import Login from "@/features/Auth/pages/login"; // التأكد من أن مجلد Auth يبدأ بحرف كبير
 import Register from "@/features/Auth/pages/register";
