@@ -62,6 +62,20 @@ const Register = () => {
         </div>
 
         <form className="w-full max-w-sm space-y-4">
+          {/* Service Type Selection - Only visible for Owners */}
+          {role === 'Owner' && (
+            <div className="animate-fadeIn">
+              <label className="block text-[11px] font-semibold text-[#A88C5D] mb-1.5 ml-1 uppercase tracking-wider">Service Type</label>
+              <select className="w-full bg-[#FDFBF9] border border-[#EADACC] px-4 py-3.5 rounded-xl outline-none focus:ring-1 focus:ring-[#A88C5D] text-sm text-gray-700 appearance-none cursor-pointer shadow-sm">
+                <option value="" disabled selected>Select your business type</option>
+                <option value="hall">Wedding Hall</option>
+                <option value="organizer">Planning Company</option>
+                <option value="photography">Photo Session</option>
+                <option value="roof">Roof Venue</option>
+              </select>
+            </div>
+          )}
+
           <div>
             <label className="block text-[11px] font-semibold text-gray-600 mb-1.5 ml-1">Full Name</label>
             <input type="text" className="w-full bg-[#F9F7F5] border border-gray-100 px-4 py-3.5 rounded-xl outline-none focus:ring-1 focus:ring-[#A88C5D] text-sm text-gray-700" />
