@@ -1,69 +1,77 @@
-import React, { useState } from 'react';
-import SearchCategories from '../components/SearchCategories';
-import SearchResultCard from '../components/SearchResultCard';
+// import React, { useMemo } from 'react';
+// import { useSearchParams } from "react-router-dom";
 
-const SearchPage = () => {
-  const [activeCategory, setActiveCategory] = useState('Halls');
+// import SearchCategories from '../components/SearchCategories';
+// import VenueCard from '../../../shared/components/VenueCard';
+// import VenueSearch from '../../hall/components/VenueSearch';
 
-  // بيانات تحاكـي الصورة تماماً
-  const venues = [
-    {
-      id: 1,
-      name: "The Grand Ballroom",
-      location: "Manhattan, New York",
-      description: "Luxurious ballroom featuring crystal chandeliers, marble floors, and floor-to-ceiling windows.",
-      rating: 4.9,
-      reviews: 234,
-      price: "$$$",
-      image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80"
-    },
-    {
-      id: 2,
-      name: "Opulent Palace",
-      location: "Beverly Hills, California",
-      description: "Historic venue with ornate architecture, grand staircases, and elegant period details.",
-      rating: 4.8,
-      reviews: 189,
-      price: "$$$$",
-      image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80"
-    },
-    {
-      id: 3,
-      name: "Crystal Pavilion",
-      location: "Chicago, Illinois",
-      description: "Contemporary glass-enclosed space with stunning natural light and panoramic views.",
-      rating: 4.9,
-      reviews: 312,
-      price: "$$$",
-      image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&q=80"
-    }
-  ];
+// const SearchPage = () => {
+//   const [searchParams] = useSearchParams();
 
-  return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-6 pt-24 pb-20">
-        
-        {/* المكون العلوي */}
-        <SearchCategories 
-          activeCategory={activeCategory} 
-          onCategoryChange={setActiveCategory} 
-        />
+//   // 📌 نجيب الكلمة من الـ URL
+//   const keyword = searchParams.get("keyword") || "";
 
-        {/* عنوان النتائج */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-800">Search Results</h2>
-          <p className="text-gray-400 mt-2 font-light">9 venues available</p>
-        </div>
+//   const [activeCategory, setActiveCategory] = React.useState('Halls');
 
-        {/* شبكة النتائج */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {venues.map((venue) => (
-            <SearchResultCard key={venue.id} venue={venue} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+ 
 
-export default SearchPage;
+
+//   // 📌 فلترة ذكية (name + location + description)
+//   const filteredVenues = useMemo(() => {
+//     return venues.filter((venue) =>
+//       [venue.name, venue.location, venue.description]
+//         .join(" ")
+//         .toLowerCase()
+//         .includes(keyword.toLowerCase())
+//     );
+//   }, [keyword, venues]);
+
+//   return (
+//     <div className="min-h-screen bg-white">
+//       <div className="max-w-7xl mx-auto px-6 pt-24 pb-20">
+
+//         {/* 🔍 Search Bar */}
+//         <VenueSearch />
+
+//         {/* 🏷 Categories */}
+//         <SearchCategories 
+//           activeCategory={activeCategory} 
+//           onCategoryChange={setActiveCategory} 
+//         />
+
+//         {/* 📊 Results Info */}
+//         <div className="mb-12">
+//           <h2 className="text-3xl font-bold text-gray-800">
+//             Search Results
+//           </h2>
+
+//           {keyword && (
+//             <p className="text-gray-500 mt-1 text-sm">
+//               Showing results for: <span className="font-medium">"{keyword}"</span>
+//             </p>
+//           )}
+
+//           <p className="text-gray-400 mt-2 font-light">
+//             {filteredVenues.length} venues available
+//           </p>
+//         </div>
+
+//         {/* 🧾 Results */}
+//         {filteredVenues.length > 0 ? (
+//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+//             {filteredVenues.map((venue) => (
+//               <VenueCard key={venue.id} venue={venue} />
+//             ))}
+//           </div>
+//         ) : (
+//           <div className="text-center text-gray-400 mt-20">
+//             No results found 😢
+//           </div>
+//         )}
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default SearchPage;

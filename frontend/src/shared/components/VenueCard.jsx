@@ -18,7 +18,7 @@ const VenueCard = ({
     if (price === 'high') return '$$$';
     return '$$';
   };
-
+ if (!name) return null;
   return (
     <div className="max-w-[350px] bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100 group">
       
