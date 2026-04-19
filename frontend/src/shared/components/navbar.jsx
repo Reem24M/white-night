@@ -20,7 +20,7 @@ const Navbar = () => {
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
           <Link to="/" className={linkClass}>Home</Link>
-          <Link to="/services" className={linkClass}>Services</Link>
+          <Link to="/search" className={linkClass}>Services</Link>
           <Link to="/about" className={linkClass}>About</Link>
         </div>
 

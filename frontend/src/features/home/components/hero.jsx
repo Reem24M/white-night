@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
@@ -35,9 +36,9 @@ const HeroSection = () => {
             />
 
             {/* Button */}
-            <button className="bg-[#D4AF37] hover:bg-[#c09e2d] text-white font-medium px-5 md:px-8 py-4 transition">
+            <Link to='/search' className="bg-[#D4AF37] hover:bg-[#c09e2d] text-white font-medium px-5 md:px-8 py-4 transition">
               Search
-            </button>
+            </Link>
           </div>
         </div>
 
