@@ -11,7 +11,16 @@ const getMyFavorites = asyncHandler(async (req, res) => {
     .populate("hall", "name address coverPhoto priceRange hallType numberOfReviews")
     .sort({ createdAt: -1 });
 
-  res.status(200).json({ favorites, total: favorites.length });
+  // تحويل البيانات عشان coverPhoto يبقى url مباشرة
+  const formatted = favorites.map((fav) => ({
+    ...fav.toObject(),
+    hall: {
+      ...fav.hall.toObject(),
+      coverPhoto: fav.hall.coverPhoto?.url || null,
+    },
+  }));
+
+  res.status(200).json({ favorites: formatted, total: formatted.length });
 });
 
 
@@ -21,15 +30,16 @@ const getMyFavorites = asyncHandler(async (req, res) => {
 const checkIfFavorite = asyncHandler(async (req, res) => {
   const { hallId } = req.params;
 
-  const isFavorite = await favHallModel.findOne({ 
-    user: req.user.id, 
-    hall: hallId 
+  const isFavorite = await favHallModel.findOne({
+    user: req.user.id,
+    hall: hallId,
   });
 
-  res.status(200).json({ 
-    isFavorite: !!isFavorite // هيرجع true لو موجود، و false لو مش موجود
+  res.status(200).json({
+    isFavorite: !!isFavorite,
   });
 });
+
 // @desc  Add a hall to favorites
 // @route POST /favorites/:hallId
 // @access Private (User)
@@ -45,10 +55,12 @@ const addToFavorites = asyncHandler(async (req, res) => {
   const fav = await favHallModel.create({ user: req.user.id, hall: hallId });
   await fav.populate("hall", "name address coverPhoto");
 
-  res.status(201).json({ message: "Added to favorites", favorite: fav });
+  // تحويل coverPhoto لـ url مباشرة
+  const favObj = fav.toObject();
+  favObj.hall.coverPhoto = fav.hall.coverPhoto?.url || null;
+
+  res.status(201).json({ message: "Added to favorites", favorite: favObj });
 });
-
-
 
 
 // @desc  Remove a hall from favorites
