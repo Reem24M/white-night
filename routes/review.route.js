@@ -15,7 +15,7 @@ const router = Router();
 // @route PUT  /reviews/:reviewId       - update own review
 // @route DELETE /reviews/:reviewId     - delete review (owner or admin)
 
-router.get("/my-reviews", Protect, getMyReviews);
+router.get("/myreviews", Protect, getMyReviews);
 router.get("/:hallId", getHallReviews);
 router.post("/:hallId", Protect, addReview);
 router.put("/:reviewId", Protect, updateReview);
