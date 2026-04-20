@@ -37,6 +37,7 @@ const Register = () => {
           email: formData.email,
           phone: formData.phone,
           password: formData.password,
+          confirmPassword: formData.confirmPassword,
           role: role,
           serviceType: role === 'owner' ? formData.serviceType : undefined
         }),
