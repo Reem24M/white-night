@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import FavoritesFilters from "../components/FavoritesFilters";
-import FavoriteCard from "../components/FavoriteCard";
+import FavoritesFilters from "../components/favoritesFilters";
+import FavoriteCard from "../components/favoriteCard";
 import { Heart, PlusCircle, ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 

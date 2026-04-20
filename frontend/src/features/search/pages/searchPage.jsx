@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import VenueCard from "../../../shared/components/VenueCard";
+import VenueCard from "../../../shared/components/venueCard";
 import VenueSearch from "../../hall/components/venueSearch";
 
 const SearchPage = () => {
