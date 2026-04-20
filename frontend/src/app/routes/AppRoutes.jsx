@@ -4,6 +4,11 @@ import { Toaster } from "sonner";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard from "../../features/Admen/Pages/Dashboard";
+import Services from "../../features/Admen/Pages/Services";
+import UserManagement from "../../features/Admen/Pages/Users";
+import EditProfile from "../../features/Admen/Pages/EditProfileUser";
 
 import Home from "@/features/home/pages/home";
 import SearchPage from "@/features/search/pages/SearchPage";
@@ -34,6 +39,14 @@ export default function AppRoutes() {
         <Route path="/profile" element={<Profile />} />
       </Route>
 
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Dashboard />} /> 
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="services" element={<Services />} />
+          <Route path="users" element={<UserManagement />} />
+          <Route path="pending" element={<Services />} /> 
+        </Route>
 
       
       <Route element={<AuthLayout />}>
