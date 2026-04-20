@@ -54,7 +54,6 @@ const ContactPage = () => {
             </form>
           </div>
 
-          {/* Right Side: Get in Touch Info */}
           <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 flex flex-col space-y-10">
             <h2 className="text-2xl font-semibold text-gray-800">Get in Touch</h2>
             
