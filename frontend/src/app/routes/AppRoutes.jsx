@@ -52,7 +52,7 @@ export default function AppRoutes() {
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
       {/* hall routes */}
-      <Route path="/hall/:id" element={<HallsDetails />} />
+      {/* <Route path="/hall/:id" element={<HallDetails />} /> */}
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
