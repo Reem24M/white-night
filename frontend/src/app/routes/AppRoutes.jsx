@@ -20,7 +20,7 @@ import Profile from "@/features/profile/pages/profile";
 import About from "@/features/about/pages/about"; 
 import NotFound from "@/features/error"; 
 
-
+import HallsDetails from "@/features/Hall/pages/hallDetails";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -43,7 +43,8 @@ export default function AppRoutes() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
-
+      {/* hall routes */}
+      <Route path="/hall/:id" element={<HallsDetails />} />
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>

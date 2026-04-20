@@ -46,6 +46,7 @@ const FeaturedVenues = () => {
                         {venues.map((venue) => (
                             <VenueCard
                                 key={venue._id}
+                                id={venue._id}
                                 name={venue.name}
                                 image={venue.coverPhoto?.url}
                                 location={`${venue.address.city}, ${venue.address.governorate}`}

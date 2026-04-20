@@ -84,10 +84,10 @@ const SearchPage = () => {
   <div className="min-h-screen bg-white">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-16 sm:pb-20">
 
-      {/* 🔍 Search */}
+      
       <VenueSearch />
 
-      {/* 🎯 Filters */}
+      
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 my-8 sm:my-10 justify-center items-center">
 
         {/* Price */}
@@ -140,7 +140,7 @@ const SearchPage = () => {
 
       </div>
 
-      {/* 📊 Header */}
+     
       <div className="mb-8 sm:mb-10 text-center sm:text-left">
         <h2 className="text-2xl sm:text-3xl font-bold">
           Search Results
@@ -157,16 +157,17 @@ const SearchPage = () => {
         </p>
       </div>
 
-      {/* ⏳ Loading */}
+    
       {loading ? (
         <div className="text-center mt-16 sm:mt-20">Loading...</div>
       ) : filteredHalls.length > 0 ? (
 
-        /* 🧾 Grid */
+       
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredHalls.map((hall) => (
             <VenueCard
               key={hall._id}
+              id={hall._id}
               name={hall.name}
               image={hall.coverPhoto?.url}
               location={`${hall.address?.city}, ${hall.address?.governorate}`}

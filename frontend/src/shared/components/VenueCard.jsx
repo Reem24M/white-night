@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 // import { Link } from 'react-router-dom';
 const VenueCard = ({
+  id,
   name,
   image,
   location,
@@ -74,7 +75,7 @@ const VenueCard = ({
 
         {/* Button */}
       <Link
-  to={`/hall/${name.replace(/\s+/g, '-').toLowerCase()}`}
+  to={`/hall/${id}`}
   className="group relative flex items-center justify-center gap-2 w-full mt-3 py-3 rounded-full border border-[#D4AF37] text-[#D4AF37] font-medium overflow-hidden transition-all duration-300"
 >
   {/* Background hover effect */}

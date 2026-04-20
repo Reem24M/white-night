@@ -1,7 +1,50 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:7000/auth/login', { // تأكد من المسار الصحيح للـ API
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // ✅ تخزين التوكن
+        localStorage.setItem('token', data.Token);
+
+        // ✅ تخزين بيانات المستخدم المختارة
+        localStorage.setItem('user', JSON.stringify({
+          fullname: data.user.fullname,
+          email: data.user.email,
+          phone: data.user.phone,
+          role: data.user.role
+        }));
+
+        alert("Login successful!");
+        navigate('/'); // التوجه لصفحة الهوم مثلاً
+      } else {
+        alert(data.message || "Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row w-full max-w-[900px] mx-auto min-h-[550px] font-sans">
       
@@ -24,7 +67,7 @@ const Login = () => {
       <div className="w-full md:w-1/2 p-8 lg:p-14 flex flex-col justify-center items-center">
         
         {/* Branding Logo */}
-        <div className="mb-4 text-[#A88C5D]">
+        <div className="mb-4 text-[#D4AF37]">
           <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 12a2 2 0 100-4 2 2 0 000 4z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M15 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -34,7 +77,7 @@ const Login = () => {
         
         <h3 className="text-2xl font-serif mb-8 text-gray-900 tracking-wider uppercase">WELCOME BACK</h3>
 
-        <form className="w-full max-w-sm space-y-5">
+        <form onSubmit={handleLogin} className="w-full max-w-sm space-y-5">
           {/* Email Field */}
           <div>
             <label className="block text-[11px] font-semibold text-gray-600 mb-1.5 ml-1">Email Address</label>
@@ -44,8 +87,11 @@ const Login = () => {
               </div>
               <input 
                 type="email" 
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="example@gmail.com" 
-                className="w-full bg-[#F9F7F5] border border-gray-100 pl-11 pr-4 py-3.5 rounded-xl outline-none focus:ring-1 focus:ring-[#A88C5D] text-sm text-gray-700 placeholder-gray-400 transition-all" 
+                className="w-full bg-[#F9F7F5] border border-gray-100 pl-11 pr-4 py-3.5 rounded-xl outline-none focus:ring-1 focus:ring-[#D4AF37] text-sm text-gray-700 placeholder-gray-400 transition-all" 
               />
             </div>
           </div>
@@ -54,7 +100,7 @@ const Login = () => {
           <div>
             <div className="flex justify-between items-center mb-1.5 px-1 text-[11px]">
               <label className="font-semibold text-gray-600">Password</label>
-              <Link to="/forgot-password" size="sm" className="text-gray-400 hover:text-[#A88C5D] transition-colors">
+              <Link to="/forgot-password" size="sm" className="text-gray-400 hover:text-[#D4AF37] transition-colors">
                 Forgot Password?
               </Link>
             </div>
@@ -64,29 +110,31 @@ const Login = () => {
               </div>
               <input 
                 type="password" 
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" 
-                className="w-full bg-[#F9F7F5] border border-gray-100 pl-11 pr-4 py-3.5 rounded-xl outline-none focus:ring-1 focus:ring-[#A88C5D] text-sm text-gray-700 transition-all" 
+                className="w-full bg-[#F9F7F5] border border-gray-100 pl-11 pr-4 py-3.5 rounded-xl outline-none focus:ring-1 focus:ring-[#D4AF37] text-sm text-gray-700 transition-all" 
               />
             </div>
           </div>
 
           <div className="pt-2">
-            <button type="submit" className="w-full bg-gradient-to-r from-[#BA9C6B] to-[#A0814C] text-white py-3.5 rounded-xl font-medium shadow-[0_4px_14px_0_rgba(186,156,107,0.39)] hover:shadow-[0_6px_20px_rgba(186,156,107,0.23)] hover:opacity-90 transition-all text-sm tracking-wide uppercase">
-              LOGIN
+            <button 
+              type="submit" 
+              disabled={loading}
+              className={`w-full bg-gradient-to-r from-[#D4AF37] to-[#D4AF37] text-white py-3.5 rounded-xl font-medium shadow-md hover:opacity-90 transition-all text-sm tracking-wide uppercase ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {loading ? 'LOGGING IN...' : 'LOGIN'}
             </button>
           </div>
         </form>
 
-        {/* Footer Links */}
         <div className="mt-5 text-center">
-          <p className="text-[10px] text-gray-500 font-medium mb-3">
-            Remember me for 30 days
-          </p>
           <p className="text-[11px] text-gray-500">
             Don't have an account? <Link to="/register" className="text-gray-800 font-semibold hover:text-[#A88C5D] transition-colors">Create one</Link>
           </p>
         </div>
-        
       </div>
     </div>
   );
