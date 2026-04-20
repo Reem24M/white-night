@@ -3,10 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Star, Heart, ArrowLeft, Calendar, X } from "lucide-react";
 import { toast } from "sonner";
 
-import InfoTab from "../components/InfoTab";
-import ServicesTab from "../components/ServicesTab";
-import PhotosTab from "../components/PhotosTab";
-import ReviewsTab from "../components/ReviewsTab";
+import InfoTab from "../components/infoTab";
+import ServicesTab from "../components/servicesTab";
+import PhotosTab from "../components/photosTab";
+import ReviewsTab from "../components/reviewsTab";
 
 const HallDetails = () => {
   const { id } = useParams();

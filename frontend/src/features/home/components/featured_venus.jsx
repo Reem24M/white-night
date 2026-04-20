@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import VenueCard from '../../../shared/components/VenueCard';
+import VenueCard from '../../../shared/components/venueCard';
 
 const FeaturedVenues = () => {
     const [venues, setVenues] = useState([]);
