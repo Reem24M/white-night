@@ -12,7 +12,7 @@ import EditProfile from "../../features/Admen/Pages/EditProfileUser";
 
 import Home from "@/features/home/pages/home";
 import SearchPage from "../../features/search/pages/SearchPage";
-import HallDetails from "../../features/hall/pages/hallDetails";
+// import HallDetails from "../../features/hall/pages/hallDetails";
 // import BookingPage from '../../features/booking/pages/bookingPage' 
 import Login from "@/features/Auth/pages/login"; 
 import Register from "@/features/Auth/pages/register";
@@ -24,7 +24,7 @@ import Profile from "@/features/profile/pages/profile";
 import About from "@/features/about/pages/about"; 
 import NotFound from "@/features/error"; 
 
-import HallsDetails from "@/features/Hall/pages/hallDetails";
+// import HallsDetails from "@/features/Hall/pages/hallDetails";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -55,7 +55,7 @@ export default function AppRoutes() {
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
       {/* hall routes */}
-      <Route path="/hall/:id" element={<HallsDetails />} />
+      {/* <Route path="/hall/:id" element={<HallsDetails />} /> */}
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
