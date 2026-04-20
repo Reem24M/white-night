@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-import VenueCard from "../../../shared/components/VenueCard";
-import VenueSearch from "../../hall/components/VenueSearch";
+import VenueCard from "../../../shared/components/venueCard";
+import VenueSearch from "../../hall/components/venueSearch";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -85,7 +85,7 @@ const SearchPage = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-16 sm:pb-20">
 
       
-      <VenueSearch />
+      <VenueSearch/>
 
       
       <div className="flex flex-col sm:flex-row flex-wrap gap-4 my-8 sm:my-10 justify-center items-center">

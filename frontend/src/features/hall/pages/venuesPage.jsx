@@ -1,6 +1,6 @@
 // src/features/hall/pages/VenuesPage.jsx
 import VenueFilter from '../components/VenueFilter';
-import VenueCard from '../components/VenueCard';
+import VenueCard from '../../../shared/components/venueCard';
 import { useState } from 'react';
 export default function VenuesPage() {
   const [, setActiveFilters] = useState({ price: 'all', capacity: 1000 });

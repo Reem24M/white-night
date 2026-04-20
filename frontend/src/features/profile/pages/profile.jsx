@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Heart, 
-  Star, 
-  Edit2, 
-  LogOut, 
-  ChevronRight, 
-  Trash2, 
-  PlusCircle 
+import React, { useState } from 'react';
+import {
+  Heart,
+  Star,
+  Edit2,
+  LogOut,
+  ChevronRight,
+  Trash2,
+  PlusCircle
 } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState({
-    fullname: 'Ahmed Mansour',
-    email: 'ahmed.mansour@email.com',
-    phone: '+20 123 456 7890',
-    preferredCity: ''
-  });
-
-  useEffect(() => {
+  const [user,] = useState(() => {
     const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
+    return savedUser ? JSON.parse(savedUser) : {
+      fullname: 'Ahmed Mansour',
+      email: 'ahmed.mansour@email.com',
+      phone: '+20 123 456 7890',
+      preferredCity: ''
+    };
+  });
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -33,7 +30,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-[#FDFCFB] py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-6xl mx-auto space-y-8">
-        
+
         {/* Header Profile Card */}
         <div className="bg-[#FAF9F6] rounded-[2.5rem] p-8 relative overflow-hidden border border-[#F3EFE0] shadow-sm flex flex-col md:flex-row items-center md:items-start gap-8">
           {/* Avatar Section */}
@@ -84,24 +81,24 @@ const ProfilePage = () => {
           {/* Decorative Ring Icon (as seen in image) */}
           <div className="absolute right-[-20px] top-[-20px] opacity-[0.03] pointer-events-none">
             <svg width="300" height="300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                <circle cx="12" cy="14" r="8" />
-                <path d="M12 6L14 3L12 1L10 3L12 6Z" />
+              <circle cx="12" cy="14" r="8" />
+              <path d="M12 6L14 3L12 1L10 3L12 6Z" />
             </svg>
           </div>
         </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
+
           {/* Left Column: Personal Details Form */}
           <div className="lg:col-span-2 bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm space-y-6">
             <h2 className="text-xl font-serif font-bold text-gray-800 border-b border-gray-50 pb-4">Personal Details</h2>
-            
+
             <div className="grid grid-cols-1 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-500 uppercase ml-1">Full Name</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   defaultValue={user.fullname}
                   className="w-full bg-[#F9F7F5] border border-gray-50 p-4 rounded-xl outline-none focus:ring-2 focus:ring-[#D4AF37]/20 text-gray-800"
                 />
@@ -109,8 +106,8 @@ const ProfilePage = () => {
 
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-500 uppercase ml-1">Email Address</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   defaultValue={user.email}
                   className="w-full bg-[#F9F7F5] border border-gray-50 p-4 rounded-xl outline-none focus:ring-2 focus:ring-[#D4AF37]/20 text-gray-800"
                 />
@@ -118,8 +115,8 @@ const ProfilePage = () => {
 
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-500 uppercase ml-1">Phone Number</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   defaultValue={user.phone || '+20 123 456 7890'}
                   className="w-full bg-[#F9F7F5] border border-gray-50 p-4 rounded-xl outline-none focus:ring-2 focus:ring-[#D4AF37]/20 text-gray-800"
                 />
@@ -140,7 +137,7 @@ const ProfilePage = () => {
               <button className="text-[#8B322C] text-sm font-bold hover:underline w-fit">
                 Change Password
               </button>
-              
+
               <div className="border-t border-gray-50 pt-6">
                 <button className="bg-[#E3362E] text-white px-8 py-3 rounded-xl text-sm font-bold shadow-md hover:bg-[#C22D26] transition-all flex items-center gap-2">
                   Delete Account
@@ -151,21 +148,26 @@ const ProfilePage = () => {
 
           {/* Right Column: Sidebar Navigation */}
           <div className="space-y-4">
-            
+
             {/* My Favorites Card */}
-            <button className="w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4 hover:border-[#D4AF37]/30 transition-all group">
+            <Link
+              to="/favorites"
+              className="cursor-pointer w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4 hover:border-[#D4AF37]/30 transition-all group"
+            >
               <div className="bg-[#FFF9E6] p-3 rounded-xl text-[#D4AF37] group-hover:scale-110 transition-transform">
                 <Heart size={24} />
               </div>
+
               <div className="text-left flex-1">
                 <h3 className="font-bold text-gray-800 text-sm">My Favorites</h3>
                 <p className="text-[11px] text-gray-400 font-medium">12 Venues</p>
               </div>
+
               <ChevronRight size={18} className="text-gray-300" />
-            </button>
+            </Link>
 
             {/* My Reviews Card */}
-            <button className="w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4 hover:border-[#D4AF37]/30 transition-all group">
+            <button className="cursor-pointer w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4 hover:border-[#D4AF37]/30 transition-all group">
               <div className="bg-[#FFF9E6] p-3 rounded-xl text-[#D4AF37] group-hover:scale-110 transition-transform">
                 <Star size={24} />
               </div>
@@ -177,9 +179,9 @@ const ProfilePage = () => {
             </button>
 
             {/* Logout Card */}
-            <button 
+            <button
               onClick={handleLogout}
-              className="w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4 hover:bg-red-50 transition-all group"
+              className="cursor-pointer w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4 hover:bg-red-50 transition-all group"
             >
               <div className="bg-red-50 p-3 rounded-xl text-red-500 group-hover:rotate-12 transition-transform">
                 <LogOut size={24} />
@@ -198,4 +200,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ProfilePage; 
