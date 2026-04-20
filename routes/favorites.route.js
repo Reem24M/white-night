@@ -3,6 +3,7 @@ import {
   getMyFavorites,
   addToFavorites,
   removeFromFavorites,
+  checkIfFavorite
 } from "../controller/favorites.controller.js";
 import { Protect } from "../middleware/auth.js";
 
@@ -14,6 +15,7 @@ const router = Router();
 
 router.get("/", Protect, getMyFavorites);
 router.post("/:hallId", Protect, addToFavorites);
+router.get("/check/:hallId", Protect, checkIfFavorite);
 router.delete("/:hallId", Protect, removeFromFavorites);
 
 export default router;

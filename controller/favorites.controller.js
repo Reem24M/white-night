@@ -14,6 +14,22 @@ const getMyFavorites = asyncHandler(async (req, res) => {
   res.status(200).json({ favorites, total: favorites.length });
 });
 
+
+// @desc    Check if a hall is in user's favorites
+// @route   GET /favorites/check/:hallId
+// @access  Private (User)
+const checkIfFavorite = asyncHandler(async (req, res) => {
+  const { hallId } = req.params;
+
+  const isFavorite = await favHallModel.findOne({ 
+    user: req.user.id, 
+    hall: hallId 
+  });
+
+  res.status(200).json({ 
+    isFavorite: !!isFavorite // هيرجع true لو موجود، و false لو مش موجود
+  });
+});
 // @desc  Add a hall to favorites
 // @route POST /favorites/:hallId
 // @access Private (User)
@@ -32,6 +48,9 @@ const addToFavorites = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Added to favorites", favorite: fav });
 });
 
+
+
+
 // @desc  Remove a hall from favorites
 // @route DELETE /favorites/:hallId
 // @access Private (User)
@@ -44,4 +63,4 @@ const removeFromFavorites = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Removed from favorites" });
 });
 
-export { getMyFavorites, addToFavorites, removeFromFavorites };
+export { getMyFavorites, addToFavorites, removeFromFavorites, checkIfFavorite };
