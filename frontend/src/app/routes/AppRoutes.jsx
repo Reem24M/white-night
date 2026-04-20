@@ -22,7 +22,7 @@ import Favorites from "@/features/favorites/pages/favorites";
 import Profile from "@/features/profile/pages/profile"; 
 import About from "@/features/about/pages/about"; 
 import NotFound from "@/features/error"; 
-import HallDetails from "@/features/hall/pages/halldetails";
+import HallDetails from "../../features/hall/pages/halldetails";
 export default function AppRoutes() {
   return (
     <Routes>
