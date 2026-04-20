@@ -124,7 +124,7 @@ const HallDetails = () => {
         toast.error(resData.message || "Booking failed");
       }
     } catch (error) {
-      toast.error("Error connecting to server");
+      toast.error("Error connecting to server",error);
     } finally {
       setBookingLoading(false);
     }
