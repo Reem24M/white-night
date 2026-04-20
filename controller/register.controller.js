@@ -15,8 +15,8 @@ const register = asyncHandler(async (req, res) => {
     if (existingUser)
         return res.status(400).json({ error: "User already exists" });
 
-    if(role && role !== 'user' && role !== 'Owner') {
-        return res.status(400).json({ error: "Invalid role specified" });
+    if(!role) {
+        return res.status(400).json({ error: "Role is required" });
     }
     const hashedPassword = await hash(password, 10);
 

@@ -5,7 +5,7 @@ import express, { json } from "express";
 import cors from "cors";
 
 import  connectDB  from "./config/connectdb.js";
-import authRoutes from "./Routes/auth.route.js";
+import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import {
   errorHandler,

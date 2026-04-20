@@ -11,7 +11,8 @@ const registerSchema = Joi.object({
 
     confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
         'any.only': 'Confirm password must match password'
-    })
+    }),
+    role: Joi.string().valid('user', 'owner').default('user')
     
 });
 

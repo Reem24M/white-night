@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { Users } from "../models/user.model.js";
+import { Users } from "../models/user.js";
 import { hallModel } from "../models/Hall.js";
 
 const optionalProtect = async (req, res, next) => {

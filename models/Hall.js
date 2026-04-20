@@ -1,4 +1,10 @@
 import { model, Schema } from "mongoose";
+const phoneNumberField = /^(01[0125][0-9]{8})$/;
+const invalidPhoneMsg = "Phone number must be a valid Egyptian mobile number starting with 010, 011, 012, or 015 and followed by 8 digits.";
+const LIMITS = {
+  GALLERY_PHOTOS: 20,
+  HALL_TYPES: 4
+};
 
 const hallSchema = new Schema(
   {
@@ -12,16 +18,12 @@ const hallSchema = new Schema(
     name: {
       type: String,
       trim: true,
-      minlength: LIMITS.NAME_MIN,
-      maxlength: LIMITS.NAME_MAX,
       required: true,
     },
 
     description: {
       type: String,
       trim: true,
-      minlength: LIMITS.DESCRIPTION_MIN,
-      maxlength: LIMITS.DESCRIPTION_MAX,
     },
 
     coverPhoto: {
@@ -38,7 +40,6 @@ const hallSchema = new Schema(
     priceRange: {
       type: String,
       trim: true,
-      enum: PriceRanges,
       default: "low",
     },
 
