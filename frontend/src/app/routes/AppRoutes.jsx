@@ -12,7 +12,7 @@ import EditProfile from "../../features/Admen/Pages/EditProfileUser";
 
 import Home from "@/features/home/pages/home";
 import SearchPage from "../../features/search/pages/SearchPage";
-import HallDetails from "../../features/hall/pages/hallDetails";
+import HallDetails from "../../features/hall/pages/halldetails";
 // import BookingPage from '../../features/booking/pages/bookingPage' 
 import Login from "@/features/Auth/pages/login"; 
 import Register from "@/features/Auth/pages/register";
