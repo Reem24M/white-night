@@ -1,53 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const EditProfile = () => {
-  const [formData, setFormData] = useState({
-    username: 'Omnya',
-    email: 'omnya@example.com',
-    phone: '0123456789'
-  });
+  const [form, setForm] = useState({ fullname: '', email: '', phone: '', _id: '' });
+  const token = localStorage.getItem("token");
 
-  const handleChange = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+  useEffect(() => {
+    axios.get('https://your-domain.com/user/me', { headers: { Authorization: `Bearer ${token}` } })
+      .then(res => setForm(res.data))
+      .catch(() => toast.error("Failed to load profile"));
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`https://your-domain.com/user/${form._id}`, form, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success("Profile Updated!");
+    } catch { toast.error("Update failed"); }
   };
 
+  const inputStyle = "w-full border border-gray-100 bg-gray-50 p-3 rounded-2xl focus:border-[#D4AF37] outline-none font-bold italic text-sm";
+
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-10 border">
-      <h2 className="text-xl font-bold mb-6 italic">Edit User Profile</h2>
-      
-      <form className="space-y-4">
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-gray-700">Username</label>
-          <input 
-            type="text" name="username" value={formData.username}
-            onChange={handleChange}
-            className="border p-2.5 rounded-xl focus:ring-2 focus:ring-black outline-none" 
-          />
+    <div className="max-w-xl mx-auto bg-white rounded-[2.5rem] border p-10 mt-10 italic shadow-sm">
+      <h2 className="text-2xl font-black uppercase text-center mb-8 underline decoration-[#D4AF37]">Edit Profile</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="text-[10px] uppercase font-black text-gray-400 ml-2">Full Name</label>
+          <input className={inputStyle} value={form.fullname} onChange={e => setForm({...form, fullname: e.target.value})} />
         </div>
-
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-gray-700">Email Address</label>
-          <input 
-            type="email" name="email" value={formData.email}
-            onChange={handleChange}
-            className="border p-2.5 rounded-xl border-red-300 focus:ring-2 focus:ring-red-100 outline-none" 
-          />
-          <p className="text-red-500 text-xs mt-1 italic font-bold uppercase">Invalid email format</p>
+        <div>
+          <label className="text-[10px] uppercase font-black text-gray-400 ml-2">Email Address</label>
+          <input className={inputStyle} value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
         </div>
-
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-gray-700">Phone Number</label>
-          <input 
-            type="text" name="phone" value={formData.phone}
-            onChange={handleChange}
-            className="border p-2.5 rounded-xl focus:ring-2 focus:ring-black outline-none" 
-          />
+        <div>
+          <label className="text-[10px] uppercase font-black text-gray-400 ml-2">Phone Number</label>
+          <input className={inputStyle} value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
         </div>
-
-        <div className="flex justify-end gap-3 pt-4 font-bold italic">
-          <button type="button" className="px-6 py-2 border rounded-xl hover:bg-gray-50 uppercase">Cancel</button>
-          <button type="submit" className="px-6 py-2 bg-black text-white rounded-xl uppercase">Update Profile</button>
-        </div>
+        <button type="submit" className="w-full bg-[#D4AF37] text-white p-4 rounded-2xl font-black uppercase shadow-lg shadow-[#D4AF37]/20">Update Profile</button>
       </form>
     </div>
   );
