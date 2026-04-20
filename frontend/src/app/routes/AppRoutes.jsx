@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-
+import { Toaster } from "sonner";
 
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
@@ -24,7 +24,6 @@ import HallsDetails from "@/features/Hall/pages/hallDetails";
 export default function AppRoutes() {
   return (
     <Routes>
-     
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchPage />} />

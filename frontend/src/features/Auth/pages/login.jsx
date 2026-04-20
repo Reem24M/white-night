@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:7000/auth/login', { // تأكد من المسار الصحيح للـ API
+      const response = await fetch('http://localhost:7000/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -21,10 +22,8 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // ✅ تخزين التوكن
         localStorage.setItem('token', data.Token);
 
-        // ✅ تخزين بيانات المستخدم المختارة
         localStorage.setItem('user', JSON.stringify({
           fullname: data.user.fullname,
           email: data.user.email,
@@ -32,14 +31,14 @@ const Login = () => {
           role: data.user.role
         }));
 
-        alert("Login successful!");
-        navigate('/'); // التوجه لصفحة الهوم مثلاً
+        toast.success("Login successful!");
+        navigate('/'); 
       } else {
-        alert(data.message || "Invalid credentials");
+        toast.error(data.message || "Invalid credentials");
       }
     } catch (error) {
       console.error("Login Error:", error);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
