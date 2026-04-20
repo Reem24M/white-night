@@ -4,123 +4,69 @@ import { hallModel } from "../models/Hall.js";
 
 const optionalProtect = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
-  if (!authHeader) {
-    req.user = null;
-    return next();
-  }
-
-  if (authHeader && !authHeader.startsWith("Bearer ")) {
+  if (!authHeader) { req.user = null; return next(); }
+  if (!authHeader.startsWith("Bearer "))
     return res.status(401).json({ message: "Invalid token format" });
-  }
 
   const token = authHeader.split(" ")[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await Users.findById(decoded.id).select("_id role");
-
-    if (!user) {
-      return res.status(401).json({ message: "User no longer exists" });
-    }
-
+    if (!user) return res.status(401).json({ message: "User no longer exists" });
     req.user = user;
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
-// token required
 const Protect = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!authHeader || !authHeader.startsWith("Bearer "))
     return res.status(401).json({ message: "Token not provided" });
-  }
 
   const token = authHeader.split(" ")[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await Users.findById(decoded.id).select("_id role");
-
-    if (!user) {
-      return res.status(401).json({ message: "User not found" });
-    }
+    if (!user) return res.status(401).json({ message: "User not found" });
     req.user = user;
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
 const restrictToAccountOwner = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Please Login first" });
-  }
-  if (req.user.role === "user") {
-    return next();
-  }
+  if (!req.user) return res.status(401).json({ message: "Please Login first" });
+  if (req.user.role === "user") return next();
   return res.status(403).json({ message: "Only users have this access" });
 };
 
 const restrictToAdminOrAccountOwner = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Please Login first" });
-  }
-  const isAccOwner = req.params.id && req.params.id === req.user.id;
-
-  if (isAccOwner || req.user.role == "admin") {
-    return next();
-  }
-  return res.status(403).json({ message: "You can Only modify your data" });
+  if (!req.user) return res.status(401).json({ message: "Please Login first" });
+  const isAccOwner = req.params.id && req.params.id === req.user.id.toString();
+  if (isAccOwner || req.user.role === "admin") return next();
+  return res.status(403).json({ message: "You can only modify your own data" });
 };
 
 const restrictToAdmin = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Please Login first" });
-  }
-
-  if (req.user.role == "admin") {
-    return next();
-  }
-  return res.status(403).json({ message: "Only Admains have this access" });
+  if (!req.user) return res.status(401).json({ message: "Please Login first" });
+  if (req.user.role === "admin") return next();
+  return res.status(403).json({ message: "Only Admins have this access" });
 };
 
-const restrictToRestaurantOwner = async (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).json({ message: "Please Login first" });
-  }
-
-  const restaurantId = req.params.id;
+const restrictToHallOwner = async (req, res, next) => {
+  if (!req.user) return res.status(401).json({ message: "Please Login first" });
+  const hallId = req.params.id;
   try {
-    const restaurant = await restaurantModel
-      .findById(restaurantId)
-      .select("Owner Gallery coverPhoto");
-
-    if (!restaurant)
-      return res.status(404).json({ message: "Restaurant not found" });
-
-    const isOwner = restaurant.Owner.equals(req.user.id);
-
-    if (isOwner) {
-      req.restaurant = restaurant;
-      return next();
-    }
-    return res
-      .status(403)
-      .json({ message: "Only Restaurant Owner have this access" });
+    const hall = await hallModel.findById(hallId).select("Owner Gallery coverPhoto");
+    if (!hall) return res.status(404).json({ message: "Hall not found" });
+    if (hall.Owner.equals(req.user.id)) { req.hall = hall; return next(); }
+    return res.status(403).json({ message: "Only Hall Owner has this access" });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Server Error", error: error.message });
+    return res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
 
-export {
-  optionalProtect,
-  Protect,
-  restrictToAdminOrAccountOwner,
-  restrictToAdmin,
-  restrictToAccountOwner,
-  restrictToRestaurantOwner,
-};
+export { optionalProtect, Protect, restrictToAdminOrAccountOwner, restrictToAdmin, restrictToAccountOwner, restrictToHallOwner };

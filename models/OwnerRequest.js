@@ -1,21 +1,28 @@
-import { model, Schema } from "mongoose";
-import { phoneNumberField, invalidPhoneMsg } from "../Utils/Schema-patterns.js";
-import { HallTypes, PriceRanges, LIMITS } from "../Utils/Constants.js";
+import { Schema, model } from 'mongoose';
+import { phoneNumberField, invalidPhoneMsg } from '../Utils/Schema-patterns.js';
+import { HallTypes, PriceRanges, LIMITS } from '../Utils/Constants.js';
 
-const hallSchema = new Schema(
+const ownerRequestSchema = new Schema(
   {
-    email: {
-      type: String,
-      trim: true,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
       unique: true,
     },
 
+    // Hall data submitted by the pending owner
     name: {
       type: String,
       trim: true,
       minlength: LIMITS.NAME_MIN,
       maxlength: LIMITS.NAME_MAX,
+      required: true,
+    },
+
+    email: {
+      type: String,
+      trim: true,
       required: true,
     },
 
@@ -31,24 +38,17 @@ const hallSchema = new Schema(
       publicId: { type: String, trim: true },
     },
 
-    numberOfReviews: {
-      type: Number,
-      min: 0,
-      default: 0,
-    },
-
-    averageRating: {
-      type: Number,
-      min: 0,
-      max: 5,
-      default: 0,
-    },
+    Gallery: [
+      {
+        url:      { type: String, required: true, trim: true },
+        publicId: { type: String, required: true, trim: true },
+      },
+    ],
 
     priceRange: {
       type: String,
-      trim: true,
       enum: PriceRanges,
-      default: "low",
+      default: 'low',
     },
 
     facebookLink: {
@@ -59,7 +59,6 @@ const hallSchema = new Schema(
     hallType: [
       {
         type: String,
-        required: true,
         trim: true,
         enum: HallTypes,
       },
@@ -88,34 +87,16 @@ const hallSchema = new Schema(
       governorate: { type: String, required: true, trim: true },
       city:        { type: String, required: true, trim: true },
       street:      { type: String, required: true, trim: true },
-      details:     { type: String, trim: true, default: "" },
+      details:     { type: String, trim: true, default: '' },
     },
 
-    Gallery: [
-      {
-        url:      { type: String, required: true, trim: true },
-        publicId: { type: String, required: true, trim: true },
-      },
-    ],
-
-    Owner: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
     },
   },
   { timestamps: true }
 );
 
-// Custom Validators
-hallSchema.path("Gallery").validate(
-  (gallery) => gallery.length <= LIMITS.GALLERY_PHOTOS,
-  `Gallery cannot have more than ${LIMITS.GALLERY_PHOTOS} photos`
-);
-
-hallSchema.path("hallType").validate(
-  (types) => types.length <= LIMITS.HALL_TYPES,
-  `Cannot add more than ${LIMITS.HALL_TYPES} hall types`
-);
-
-export const hallModel = model("Hall", hallSchema);
+export const ownerRequestModel = model('OwnerRequest', ownerRequestSchema);

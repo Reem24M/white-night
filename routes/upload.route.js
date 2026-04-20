@@ -6,12 +6,12 @@ import upload from "../middleware/upload.js";
 const router = Router();
 
 // Cover photo
-router.post("/hall/:id/cover",Protect, upload.single("coverPhoto"),uploadCoverPhoto);
+router.post("/hall/:id/cover",                Protect, upload.single("coverPhoto"),    uploadCoverPhoto);
 
 // Gallery (up to 10 images)
-router.post("/hall/:id/gallery", Protect, upload.array("images", 10),uploadGalleryImages);
+router.post("/hall/:id/gallery",              Protect, upload.array("images", 10),     uploadGalleryImages);
 
 // Delete gallery image
-router.delete("/hall/:id/gallery",Protect, deleteGalleryImage);
+router.delete("/hall/:id/gallery/:publicId",  Protect, deleteGalleryImage);
 
 export default router;
