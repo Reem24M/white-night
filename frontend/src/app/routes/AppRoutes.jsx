@@ -22,7 +22,7 @@ import Favorites from "@/features/favorites/pages/favorites";
 import Profile from "@/features/profile/pages/profile"; 
 import About from "@/features/about/pages/about"; 
 import NotFound from "@/features/error"; 
-import HallDetails from "@/features/hall/pages/halldetails";
+import HallDetails from "../../features/hall/pages/halldetails";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -52,7 +52,7 @@ export default function AppRoutes() {
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
       {/* hall routes */}
-      <Route path="/hall/:id" element={<HallsDetails />} />
+      {/* <Route path="/hall/:id" element={<HallDetails />} /> */}
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
