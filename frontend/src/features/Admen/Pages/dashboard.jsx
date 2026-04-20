@@ -1,66 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
-  const [stats, setStats] = useState({ services: 0, users: 0 });
-  const [pendingServices, setPendingServices] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    // هنا هتحطي الـ Fetch بتاعك من الباك إند
-    // Example: axios.get('/admin/stats').then(res => setStats(res.data))
-  }, []);
+  const fetchRequests = async () => {
+    try {
+      const { data } = await axios.get('https://your-domain.com/owner/requests', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setRequests(data.requests);
+    } catch (err) { toast.error("Failed to load requests"); }
+  };
+
+  useEffect(() => { fetchRequests(); }, []);
+
+  const handleDecision = async (id, decision) => {
+    try {
+      await axios.patch(`https://your-domain.com/owner/requests/${id}/${decision}`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success(`Request ${decision}ed!`);
+      fetchRequests();
+    } catch { toast.error("Action failed"); }
+  };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Dashboard Overview</h1>
-      
-      {/* Cards Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-gray-400">Total Services</p>
-          <h2 className="text-3xl font-bold">{stats.services || '1,284'}</h2>
-          <span className="text-green-500 text-sm">↑ +12% from last month</span>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <p className="text-gray-400">Active Users</p>
-          <h2 className="text-3xl font-bold">{stats.users || '45.2k'}</h2>
-          <span className="text-green-500 text-sm">↑ +8% from last month</span>
-        </div>
-      </div>
-
-      {/* Pending Services Table */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-        <div className="p-4 border-b">
-          <h3 className="font-bold text-lg">Latest Pending Services</h3>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-gray-50">
-              <tr className="text-gray-500 text-sm italic">
-                <th className="p-4">Service Name</th>
-                <th className="p-4">Owner</th>
-                <th className="p-4">Date</th>
-                <th className="p-4">Status</th>
-                <th className="p-4 text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* هنا بتعملي Map على البيانات اللي جاية من الباك */}
-              <tr className="border-b hover:bg-gray-50 transition-colors">
-                <td className="p-4 font-medium flex items-center gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-xs">📸</div>
-                  Crystal Palace
-                </td>
-                <td className="p-4 text-gray-600 text-sm">Mahmoud Ali</td>
-                <td className="p-4 text-gray-600 text-sm">2026-04-20</td>
-                <td className="p-4"><span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pending</span></td>
-                <td className="p-4 flex justify-center gap-2">
-                  <button className="p-1.5 text-blue-600 hover:bg-blue-50 rounded">View</button>
-                  <button className="p-1.5 text-green-600 hover:bg-green-50 rounded">Approve</button>
+    <div className="animate-in fade-in duration-500 italic">
+      <h1 className="text-2xl font-black uppercase mb-6 underline decoration-[#D4AF37] decoration-4">Owner Applications</h1>
+      <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+        <table className="w-full text-left">
+          <thead className="bg-gray-50/50 text-[10px] uppercase font-black text-gray-400">
+            <tr><th className="p-5">User</th><th className="p-5">Hall</th><th className="p-5 text-right">Actions</th></tr>
+          </thead>
+          <tbody className="text-sm font-bold">
+            {requests.map(req => (
+              <tr key={req._id} className="border-b border-gray-50">
+                <td className="p-5">{req.user?.fullname}</td>
+                <td className="p-5 text-gray-500 uppercase">{req.name}</td>
+                <td className="p-5 flex justify-end gap-2">
+                  <button onClick={() => handleDecision(req._id, 'approve')} className="bg-black text-white px-4 py-2 rounded-xl text-[10px] uppercase font-black">Approve</button>
+                  <button onClick={() => handleDecision(req._id, 'reject')} className="border text-red-500 px-4 py-2 rounded-xl text-[10px] uppercase font-black">Reject</button>
                 </td>
               </tr>
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
