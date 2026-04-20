@@ -137,4 +137,13 @@ const deleteReview = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Review deleted successfully" });
 });
 
-export { addReview, getHallReviews, updateReview, deleteReview };
+
+const getMyReviews = asyncHandler(async (req, res) => {
+  const reviews = await reviewModel
+    .find({ user: req.user.id })
+    .populate("Hall", "name address coverPhoto")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json({ reviews, total: reviews.length });
+});
+export { addReview, getHallReviews, updateReview, deleteReview, getMyReviews };

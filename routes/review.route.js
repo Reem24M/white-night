@@ -4,6 +4,7 @@ import {
   getHallReviews,
   updateReview,
   deleteReview,
+  getMyReviews
 } from "../controller/review.controller.js";
 import { Protect } from "../middleware/auth.js";
 
@@ -17,6 +18,7 @@ const router = Router();
 router.get("/:hallId", getHallReviews);
 router.post("/:hallId", Protect, addReview);
 router.put("/:reviewId", Protect, updateReview);
+router.get("/my-reviews", Protect, getMyReviews);
 router.delete("/:reviewId", Protect, deleteReview);
 
 export default router;
