@@ -13,7 +13,7 @@ import EditProfile from "../../features/Admen/Pages/EditProfileUser";
 import Home from "@/features/home/pages/home";
 import SearchPage from "../../features/search/pages/SearchPage";
 import HallDetails from "../../features/hall/pages/hallDetails";
-import BookingPage from '../../features/booking/pages/bookingPage' 
+// import BookingPage from '../../features/booking/pages/bookingPage' 
 import Login from "@/features/Auth/pages/login"; 
 import Register from "@/features/Auth/pages/register";
 import ForgotPassword from "@/features/Auth/pages/ForgotPassword";
@@ -32,7 +32,7 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/hall/:id" element={<HallDetails />} />
-        <Route path="/booking/:id" element={<BookingPage />} />
+        {/* <Route path="/booking/:id" element={<BookingPage />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/profile" element={<Profile />} />
